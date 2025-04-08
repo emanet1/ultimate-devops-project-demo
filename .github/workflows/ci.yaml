@@ -74,7 +74,7 @@ jobs:
             password: ${{ secrets.DOCKERHUB_TOKEN }}
 
         - name: Print Docker Tag
-          run: echo "${{ secrets.DOCKER_USERNAME }}/product-catalog:${{ github.run_id }}"
+          run: echo "${{ secrets.DOCKERHUB_USERNAME }}/product-catalog:${{ github.run_id }}"
           
 
         - name: Docker Push
@@ -83,7 +83,7 @@ jobs:
             context: src/product-catalog
             file: src/product-catalog/Dockerfile
             push: true
-            tags: ${{ secrets.DOCKER_USERNAME }}/product-catalog:${{github.run_id}}
+            tags: ${{ secrets.DOCKERHUB_USERNAME }}/product-catalog:${{github.run_id}}
 
     
     updatek8s:
@@ -99,7 +99,7 @@ jobs:
 
         - name: Update tag in kubernetes deployment manifest
           run: | 
-               sed -i "s|image: .*|image: ${{ secrets.DOCKER_USERNAME }}/product-catalog:${{github.run_id}}|" kubernetes/productcatalog/deploy.yaml
+               sed -i "s|image: .*|image: ${{ secrets.DOCKERHUB_USERNAME }}/product-catalog:${{github.run_id}}|" kubernetes/productcatalog/deploy.yaml
         
         - name: Commit and push changes
           run: |
