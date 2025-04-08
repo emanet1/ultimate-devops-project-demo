@@ -73,6 +73,10 @@ jobs:
             username: ${{ secrets.DOCKERHUB_USERNAME }}
             password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+        - name: Print Docker Tag
+          run: echo "${{ secrets.DOCKER_USERNAME }}/product-catalog:${{ github.run_id }}"
+          
+
         - name: Docker Push
           uses: docker/build-push-action@v6
           with:
